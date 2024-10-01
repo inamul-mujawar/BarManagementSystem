@@ -1,0 +1,125 @@
+﻿/* group them in class of card */
+.menu-item-butttons > button {
+          border-radius: 0 !important;
+    }
+.card > .border {
+    border: 2px solid #dee2e6 !important;
+} 
+h6, .h6 {
+    font-size: 0.80rem;
+}
+.card-body .list-group-flush > .list-group-item{
+  border: 1px solid #f8f9fa;
+}
+
+/* new card */
+.card-header, .card-footer {
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.table-div{
+    width: 10%;
+}
+/*  details info table */
+
+.details-info {
+  width: 100%;
+  padding: 10px 30px 10px 30px;
+  background-color: #f5f6fa;
+  border: 1px solid #dfe0e5;
+
+}
+ .details-info h3 {
+  color: #242526;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+ 
+/* table info */
+
+.custom-radio .custom-control-input:checked~.custom-control-label-reserved::before {
+     background-color: #ffc107;
+}
+.custom-radio .custom-control-input:checked~.custom-control-label-empty::before {
+     background-color: deepskyblue; 
+}
+.custom-radio .custom-control-input:checked~.custom-control-label-running::before {
+     background-color: darksalmon; 
+}
+.custom-radio .custom-control-input:checked~.custom-control-label-receipt-printed::before {
+     background-color: rgb(39, 180, 138); 
+}
+
+.custom-control-label::after{
+    top: auto;
+}
+
+/* tables bg colors */
+
+.is-reserved{
+    cursor: pointer;
+    border: 1px dotted black;
+    background-color: #ffc107;
+}
+.is-receipt-printed{
+    cursor: pointer;
+    border: 1px dotted black;
+    background-color: rgb(39, 180, 138);
+}
+.is-occupied{
+    cursor: pointer;
+    border: 1px dotted black;
+    background-color: darksalmon;
+}
+.is-empty{
+    cursor: pointer;
+    border: 1px dotted black;
+    background-color: deepskyblue;
+}
+
+/* sidebar-img-logo */
+.sidebar-img-logo{
+    display: block;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+/* is reserved   [data-isReservedFlag="isReservedFlag-True-True"],[data-isReservedFlag="isReservedFlag-True-False"]*/
+
+.is-reserved-prior-notification {
+
+    border: 2px #ff0000 solid;
+    animation: blink 1s;
+    animation-iteration-count: infinite;
+}
+
+[data-isRCSUFlag="isRCSUFlag-False"] {
+
+    border: 2px #ff0000 solid !important;
+}
+/*[data-isOccupiedFlag="isOccupiedFlag-True"] {
+
+   border: 1px dotted black !important;
+}*/
+
+@keyframes blink { 50% { border-color : #fff;}}
+
+/* reserve table validation */
+
+.changeColorOnFail {
+    border: 1px solid red !important;
+}
+
+/* media queries */
+
+@media screen and (max-width: 1440px) and (min-width: 1024px) {
+    .table-div {
+        width: 13%;
+    }
+}

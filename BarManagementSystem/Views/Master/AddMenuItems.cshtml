@@ -1,0 +1,137 @@
+﻿@model IEnumerable<BarManagementSystem.Models.MenuCategory>
+@{
+    ViewBag.Title = "AddMenuItems";
+}
+
+@Styles.Render("~/bundles/css-bundle")
+<link rel="stylesheet" href="~/Assets/CSS/AddMenuItem.css" />
+
+<div class="wrapper">
+    <!-- Sidebar  -->
+    @{
+        Html.RenderPartial("SideBar");
+    }
+    <!-- Page Content  -->
+    <div>
+        @{
+            Html.RenderPartial("NavBar");
+        }
+
+        <div class="container-fluid">
+            <div class="details-info">
+                <div id="add-menu-items">
+                    <form method="POST" action="/Master/AddMenuItems" id="addMenuItemsForm" onsubmit="return validateForm()">
+                        <div class="d-flex border-bottom">
+                            <h3>Add Menu Items</h3>
+                            <h6 class="ml-auto font-weight-light"><span class="text-danger">*</span> Mandatory Fields</h6>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 col-lg-3 col-xl-3"></div>
+                            <div class="col-12 col-lg-6 col-xl-6">
+                                <div class="form-group">
+                                    <label>Select Menu Category<span style="color:red">*</span></label>
+                                    <div class="d-flex">
+                                        <select class="custom-select" name="menuCategoryId" id="categorySelect">
+                                            <option selected>Choose Category</option>
+                                            @foreach (var item in Model)
+                                            {
+                                                <option value="@item.menuCategoryId" data-PriceInput="@item.priceInput">@item.menuCategory</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="menu-item-name-form" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="menuItemId">Unique Menu Item ID</label>
+                                        <div class="d-flex">
+                                            <input type="number" class="form-control" name="menuItemId" id="menuItemId" readonly placeholder="System Generated">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="itemName">Item Name<span style="color:red">*</span></label>
+                                        <div class="d-flex">
+                                            <input type="text" class="form-control itemName" name="menuItemName" id="itemName">
+                                            &nbsp;&nbsp;<span title="Item Name Cannot be Empty"><i class="fa fa-exclamation-circle itemNameEr" aria-hidden="true" style="cursor: pointer;font-size: xx-large;color: red;display: none"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="menu-item-form1" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="itemPrice">Item price<span style="color:red">*</span></label>
+                                        <div class="d-flex">
+                                            <input type="number" class="form-control" name="itemPrice" id="itemPrice">
+                                            &nbsp;&nbsp;<span title="Price Cannot be Empty"><i class="fa fa-exclamation-circle itemPriceEr" aria-hidden="true" style="cursor: pointer;font-size: xx-large;color: red;display: none"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="menu-item-form2" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="itemPrice">Half price</label>
+                                        <div class="d-flex">
+                                            <input type="number" class="form-control" name="halfItemPrice" id="itemHalfPrice">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+                                <div id="menu-item-form3" style="display: none;">
+                                    <div class="row">
+                                        <div class="form-group col-lg-6 col-xl-6">
+                                            <label for="itemPrice">30ML price<span style="color:red">*</span></label>
+                                            <div class="d-flex">
+                                                <input type="number" class="form-control" name="thirtyMLPrice" id="30MLPrice">
+                                                &nbsp;&nbsp;<span title="30ML Price Cannot be Empty"><i class="fa fa-exclamation-circle 30MLPriceEr" aria-hidden="true" style="cursor: pointer;font-size: xx-large;color: red;display: none"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-xl-6">
+                                            <label for="itemPrice">60ML price<span style="color:red">*</span></label>
+                                            <div class="d-flex">
+                                                <input type="number" class="form-control" name="sixtyMLPrice" id="60MLPrice">
+                                                &nbsp;&nbsp;<span title="60ML Price Cannot be Empty"><i class="fa fa-exclamation-circle 60MLPriceEr" aria-hidden="true" style="cursor: pointer;font-size: xx-large;color: red;display: none"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6 col-xl-6">
+                                            <label for="itemPrice">90ML price<span style="color:red">*</span></label>
+                                            <div class="d-flex">
+                                                <input type="number" class="form-control" name="ninetyMLPrice" id="90MLPrice">
+                                                &nbsp;&nbsp;<span title="90ML Price Cannot be Empty"><i class="fa fa-exclamation-circle 90MLPriceEr" aria-hidden="true" style="cursor: pointer;font-size: xx-large;color: red;display: none"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-xl-6">
+                                            <label for="itemPrice">180ML price<span style="color:red">*</span></label>
+                                            <div class="d-flex">
+                                                <input type="number" class="form-control" name="quarterMLPrice" id="180MLPrice">
+                                                &nbsp;&nbsp;<span title="180ML Price Cannot be Empty"><i class="fa fa-exclamation-circle 180MLPriceEr" aria-hidden="true" style="cursor: pointer;font-size: xx-large;color: red;display: none"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3 col-xl-3"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary btn-block w-25">Add Menu Item</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="snackbar"></div>
+</div>
+@Scripts.Render("~/bundles/bs-jq-bundle")
+<script type="text/javascript" src="~/Assets/JS/InsertUpdateMenuItems.js"></script>
+<script type="text/javascript" src="~/Assets/JS/AddMenuItems.js"></script>
+<script>
+    var success = @((TempData["AddMenuItem"] != null).ToString().ToLower());
+
+    if (success == true){
+        ShowSnackBarMessages("Menu Item added Successfully !!", "lightgrey", "green")
+    }
+</script>

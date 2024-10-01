@@ -1,0 +1,514 @@
+﻿@model BarManagementSystem.Models.MasterEntitiesModel
+
+@{
+    ViewBag.Title = "MasterEntities";
+}
+
+@Styles.Render("~/bundles/css-bundle")
+
+<div class="wrapper">
+    <!-- Sidebar  -->
+    @{
+        Html.RenderPartial("SideBar");
+    }
+    <!-- Page Content  -->
+    <div>
+        @{
+            Html.RenderPartial("NavBar");
+        }
+        <div class="container-fluid">
+            <div class="details-info">
+                <div id="add-menu-items">
+                        <div class="d-flex border-bottom">
+                            <h3>Master Entities</h3>
+                            <h6 class="ml-auto font-weight-light"><span class="text-danger">Entities included in the Paid Orders cannnot be deleted</span></h6>
+                        </div>
+                <div class="row mx-0 my-3">
+                    <div class="col-4 col-lg-3 col-xl-3">
+                        <div class="list-group" id="list-tab" role="tablist">
+                            <a class="list-group-item list-group-item-action text-center active" id="list-admin-list" data-toggle="list" href="#list-admin" role="tab" aria-controls="home">Admin</a>
+                            <a class="list-group-item list-group-item-action text-center" id="list-menuCategory-list" data-toggle="list" href="#list-menuCategory" role="tab" aria-controls="profile">Menu Category</a>
+                            <a class="list-group-item list-group-item-action text-center" id="list-paymentMode-list" data-toggle="list" href="#list-paymentMode" role="tab" aria-controls="messages">Payment Modes</a>
+                            <a class="list-group-item list-group-item-action text-center" id="list-tableLocation-list" data-toggle="list" href="#list-tableLocation" role="tab" aria-controls="settings">Table Location</a>
+                            <a class="list-group-item list-group-item-action text-center" id="list-gst-list" data-toggle="list" href="#list-gst" role="tab" aria-controls="settings">GST</a>
+                            <a class="list-group-item list-group-item-action text-center" id="list-tables-list" data-toggle="list" href="#list-tables" role="tab" aria-controls="settings">Tables</a>
+
+                        </div>
+                    </div>
+                    <div class="col-8 col-lg-9 col-xl-9" style="overflow-y:auto;height:515px">
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="list-admin" role="tabpanel" aria-labelledby="list-admin-list">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-secondary text-white">
+                                        <div class="row mx-0">
+                                            <div class="col-lg-4 col-xl-4">
+                                                <i class="fa fa-table mr-1" aria-hidden="true"></i>
+                                               Admin Master
+                                            </div>
+                                            <div class="col-lg-8 col-xl-8">
+                                                <p class="m-0 d-flex justify-content-end">
+                                                    <script>document.write(new Date().toDateString());</script>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mx-0 mt-2">
+                                        <div class="col-12 col-lg-3 col-xl-2">
+                                            <a class="btn btn-outline-primary" data-toggle="collapse" href="#collapseTables" role="button" aria-expanded="false" aria-controls="collapseTables">
+                                                <i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Add
+                                            </a>
+                                        </div>
+                                        <div class="col-12 col-lg-9 col-xl-10">
+                                            <div class="collapse" id="collapseTables">
+                                                <form class="form-inline">
+                                                    <div class="form-group">
+                                                        <label for="AdminUserName" class="sr-only">AdminUserName</label>
+                                                        <input type="text" class="form-control" id="UserName" placeholder="User Name">
+                                                    </div>
+                                                    <div class="form-group mx-sm-3">
+                                                        <label for="AdminPassword" class="sr-only">AdminPassword</label>
+                                                        <input type="password" class="form-control" id="AdminPassword" placeholder="Password">
+                                                    </div>
+                                                    <div class="form-check mr-3">
+                                                        <input class="form-check-input" type="checkbox">
+                                                        <label class="form-check-label" for="autoSizingCheck">
+                                                            Is Adminstrator
+                                                        </label>
+                                                    </div>
+                                                    <button type="button" class="btn btn-success" onclick="AddAdminUser(this)">Add</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" cellspacing="0">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th class="text-center">User Name</th>
+                                                        <th class="text-center">Password</th>
+                                                        <th class="text-center">Is Admin</th>
+                                                        <th class="text-center">Commands</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ var counterSrNo = 1;}
+                                                    @foreach (var item in Model.listOfAdminDetails)
+                                                    {
+                                                        <tr>
+                                                            <td>@counterSrNo</td>
+                                                            <td><input class="form-control text-center p-0" type="text" value="@item.userName" readonly/></td>
+                                                            <td>
+                                                                <div class="d-flex">
+                                                                    <input class="form-control text-center p-0 password" type="password" data-inputId="@counterSrNo" value="@item.password" readonly />
+                                                                    <i class="fa fa-eye-slash togglePassword pt-2" aria-hidden="true" data-iconId="@counterSrNo" style="margin-left: -30px; cursor: pointer;"></i>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check text-center  p-0">
+                                                                    @if (item.isAdminstrator)
+                                                                    {
+                                                                        <input class="form-check-input" type="checkbox" checked readonly disabled>                                                                      
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input class="form-check-input" type="checkbox" readonly disabled>
+                                                                    }
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div>
+                                                                    <button type="button" class="d-inline btn btn-warning" onclick="UpdateAdminUser(this,@item.adminId)"><i class="fa fa-pencil-square-o" aria-hidden='true'></i>&nbsp; Edit</button>
+                                                                    <button type="button" class="d-inline btn btn-danger" onclick="DeleteAdminUser(this,@item.adminId)"><i class="fa fa-trash" aria-hidden='true'></i>&nbsp; Bin</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        { counterSrNo += 1; }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="list-menuCategory" role="tabpanel" aria-labelledby="list-menuCategory-list">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-secondary text-white">
+                                        <div class="row mx-0">
+                                            <div class="col-lg-4 col-xl-4">
+                                                <i class="fa fa-table mr-1" aria-hidden="true"></i>
+                                                Menu Catgeory Master
+                                            </div>
+                                            <div class="col-lg-8 col-xl-8">
+                                                <p class="m-0 d-flex justify-content-end">
+                                                    <script>document.write(new Date().toDateString());</script>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mx-0 mt-2">
+                                        <div class="col-2 col-lg-3 col-xl-3">
+                                            <a class="btn btn-outline-primary" data-toggle="collapse" href="#collapseCategory" role="button" aria-expanded="false" aria-controls="collapseCategory">
+                                                <i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Add Menu Category
+                                            </a>
+                                        </div>
+                                        <div class="col-12 col-lg-9 col-xl-9">
+                                            <div class="collapse" id="collapseCategory">
+                                                <form class="form-inline">
+                                                    <div class="form-group mx-sm-3">
+                                                        <label for="menuCategory" class="sr-only">Menu Category</label>
+                                                        <input type="text" class="form-control" id="menuCategory" placeholder="Menu Category">
+                                                    </div>
+                                                    <div class="form-group mx-sm-3">
+                                                        <label for="tableLocation" class="sr-only">No of Prices</label>
+                                                        <select class="form-control">
+                                                            <option selected>Choose No of Prices</option>
+                                                            @foreach (var item in Model.listOfPriceInput)
+                                                            {
+                                                                <option value="@item.priceInputId" class="text-center">@item.priceInput</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-success" onclick="AddMenuCategory(this)">Add</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" cellspacing="0">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th class="text-center">Category Name</th>
+                                                        <th class="text-center">No of Prices</th>
+                                                        <th class="text-center">Commands</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ var counterSrNo2 = 1;}
+                                                    @foreach (var item in Model.listOfMenuCategory)
+                                                    {
+                                                        <tr>
+                                                            <td>@counterSrNo2</td>
+                                                            <td><input class="form-control text-center p-0" type="text" value="@item.menuCategory" readonly></td>
+                                                            <td>
+                                                                <select class="form-control" disabled>
+                                                                  
+                                                                    @foreach (var item2 in Model.listOfPriceInput)
+                                                                    {
+                                                                        if (item.priceInputId == item2.priceInputId)
+                                                                        {
+                                                                            <option value="@item2.priceInputId" selected>@item2.priceInput</option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@item2.priceInputId">@item2.priceInput</option>
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div>
+                                                                    <button type="button" class="d-inline btn btn-warning" onclick="UpdateMenuCategory(this,@item.menuCategoryId)"><i class="fa fa-pencil-square-o" aria-hidden='true'></i>&nbsp; Edit</button>
+                                                                    <button type="button" class="d-inline btn btn-danger" onclick="DeleteMenuCategory(this,@item.menuCategoryId)"><i class="fa fa-trash" aria-hidden='true'></i>&nbsp; Bin</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        { counterSrNo2 += 1; }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="list-paymentMode" role="tabpanel" aria-labelledby="list-paymentMode-list">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-secondary text-white">
+                                        <div class="row mx-0">
+                                            <div class="col-lg-4 col-xl-4">
+                                                <i class="fa fa-table mr-1" aria-hidden="true"></i>
+                                                Payment Modes Master
+                                            </div>
+                                            <div class="col-lg-8 col-xl-8">
+                                                <p class="m-0 d-flex justify-content-end">
+                                                    <script>document.write(new Date().toDateString());</script>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mx-0 mt-2">
+                                        <div class="col-12 col-lg-3 col-xl-3">
+                                            <a class="btn btn-outline-primary" data-toggle="collapse" href="#collapsePaymentMode" role="button" aria-expanded="false" aria-controls="collapsePaymentMode">
+                                                <i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Add Payment Mode
+                                            </a>
+                                        </div>
+                                        <div class="col-12 col-lg-9 col-xl-9">
+                                            <div class="collapse" id="collapsePaymentMode">
+                                                <form class="form-inline">
+                                                    <div class="form-group mx-sm-3">
+                                                        <label for="paymentMode" class="sr-only">Payment Mode</label>
+                                                        <input type="text" class="form-control" id="paymentMode" placeholder="Payment Mode">
+                                                    </div>
+                                                    <button type="button" class="btn btn-success" onclick="AddPaymentMode(this)">Add</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" cellspacing="0">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th class="text-center">Payment Mode</th>
+                                                        <th class="text-center">Commands</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ var counterSrNo3 = 1;}
+                                                    @foreach (var item in Model.listOfPaymentMode)
+                                                    {
+                                                        <tr>
+                                                            <td>@counterSrNo3</td>
+                                                            <td><input class="form-control text-center p-0" type="text" value="@item.paymentMode" readonly/></td>
+                                                            <td class="text-center">
+                                                                <div>
+                                                                    <button type="button" class="d-inline btn btn-warning" onclick="UpdatePaymentMode(this,@item.paymentModeId)"><i class="fa fa-pencil-square-o" aria-hidden='true'></i>&nbsp; Edit</button>
+                                                                    <button type="button" class="d-inline btn btn-danger" onclick="DeletePaymentMode(this,@item.paymentModeId)"><i class="fa fa-trash" aria-hidden='true'></i>&nbsp; Bin</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        { counterSrNo3 += 1; }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="list-tableLocation" role="tabpanel" aria-labelledby="list-tableLocation-list">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-secondary text-white">
+                                        <div class="row mx-0">
+                                            <div class="col-lg-4 col-xl-4">
+                                                <i class="fa fa-table mr-1" aria-hidden="true"></i>
+                                                Table Location Master
+                                            </div>
+                                            <div class="col-lg-8 col-xl-8">
+                                                <p class="m-0 d-flex justify-content-end">
+                                                    <script>document.write(new Date().toDateString());</script>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mx-0 mt-2">
+                                        <div class="col-12 col-lg-3 col-xl-3">
+                                            <a class="btn btn-outline-primary" data-toggle="collapse" href="#collapseTableLocation" role="button" aria-expanded="false" aria-controls="collapseTableLocation">
+                                                <i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Add Table Location
+                                            </a>
+                                        </div>
+                                        <div class="col-12 col-lg-9 col-xl-9">
+                                            <div class="collapse" id="collapseTableLocation">
+                                                <form class="form-inline">
+                                                    <div class="form-group mx-sm-3">
+                                                        <label for="tableLocation" class="sr-only">Table Location</label>
+                                                        <input type="text" class="form-control" id="tableLocation" placeholder="Table Location">
+                                                    </div>
+                                                    <button type="button" class="btn btn-success" onclick="AddTableLocation(this)">Add</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover"  cellspacing="0">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th class="text-center">Table Location</th>
+                                                        <th class="text-center">Commands</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ var counterSrNo4 = 1;}
+                                                    @foreach (var item in Model.listOfTableLocation)
+                                                    {
+                                                        <tr>
+                                                            <td>@counterSrNo4</td>
+                                                            <td><input class="form-control text-center p-0" type="text" value="@item.tableLocation" readonly/></td>
+                                                            <td class="text-center">
+                                                                <div>
+                                                                    <button type="button" class="d-inline btn btn-warning" onclick="UpdateTableLocation(this,@item.tableLocationId)"><i class="fa fa-pencil-square-o" aria-hidden='true'></i>&nbsp; Edit</button>
+                                                                    <button type="button" class="d-inline btn btn-danger" onclick="DeleteTableLocation(this,@item.tableLocationId)"><i class="fa fa-trash" aria-hidden='true'></i>&nbsp; Bin</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        { counterSrNo4 += 1; }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="list-gst" role="tabpanel" aria-labelledby="list-gst-list">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-secondary text-white">
+                                        <div class="row mx-0">
+                                            <div class="col-lg-4 col-xl-4">
+                                                <i class="fa fa-table mr-1" aria-hidden="true"></i>
+                                                GST Master
+                                            </div>
+                                            <div class="col-lg-8 col-xl-8">
+                                                <p class="m-0 d-flex justify-content-end">
+                                                    <script>document.write(new Date().toDateString());</script>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" cellspacing="0">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th class="text-center">CGST (%)</th>
+                                                        <th class="text-center">SGST (%)</th>
+                                                        <th class="text-center">VAT (%)</th>
+                                                        <th class="text-center">Commands</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ var counterSrNo5 = 1;}
+                                                    @foreach (var item in Model.listOfGSTDetails)
+                                                    {
+                                                        <tr>
+                                                            <td>@counterSrNo5</td>
+                                                            <td><input class="form-control text-center p-0" type="text" value="@item.cgst" readonly/></td>
+                                                            <td><input class="form-control text-center p-0" type="text" value="@item.sgst" readonly/></td>
+                                                            <td><input class="form-control text-center p-0" type="text" value="@item.vat" readonly/></td>
+                                                            <td class="text-center">
+                                                                <div>
+                                                                    <button type="button" class="d-inline btn btn-warning" onclick="UpdateGSTInfo(this,@item.gstId)"><i class="fa fa-pencil-square-o" aria-hidden='true'></i>&nbsp; Edit</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        { counterSrNo5 += 1; }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="list-tables" role="tabpanel" aria-labelledby="list-tables-list">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-secondary text-white">
+                                        <div class="row mx-0">
+                                            <div class="col-lg-4 col-xl-4">
+                                                <i class="fa fa-table mr-1" aria-hidden="true"></i>
+                                                Tables Master
+                                            </div>
+                                            <div class="col-lg-8 col-xl-8">
+                                                <p class="m-0 d-flex justify-content-end">
+                                                    <script>document.write(new Date().toDateString());</script>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mx-0 mt-2">
+                                        <div class="col-12 col-lg-3 col-xl-3">
+                                            <a class="btn btn-outline-primary" data-toggle="collapse" href="#collapseTables" role="button" aria-expanded="false" aria-controls="collapseTables">
+                                                <i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Add Tables
+                                            </a>
+                                        </div>
+                                        <div class="col-12 col-lg-9 col-xl-9">
+                                            <div class="collapse" id="collapseTables">
+                                                <form class="form-inline">
+                                                    <div class="form-group">
+                                                        <label for="tableName" class="sr-only">tableLocation</label>
+                                                        <input type="text" class="form-control" id="tableName" placeholder="Table name">
+                                                    </div>
+                                                    <div class="form-group mx-sm-3">
+                                                        <label for="tableLocation" class="sr-only">Table Location</label>
+                                                        <select class="form-control">
+                                                            <option selected>Select Table Location</option>
+                                                                @foreach (var item in Model.listOfTableLocation)
+                                                                {                                                                  
+                                                                    <option value="@item.tableLocationId">@item.tableLocation</option>
+                                                                }
+                                                        </select>
+                                                    </div>
+                                                    <button type="button" class="btn btn-success" onclick="AddTableInfo(this)">Add</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="dataTable-Tables" cellspacing="0">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th class="text-center">Table Name</th>
+                                                        <th class="text-center">Table Location</th>
+                                                        <th class="text-center">Commands</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ var counterSrNo6 = 1;}
+                                                    @foreach (var item in Model.listOfTables)
+                                                    {
+                                                        <tr>
+                                                            <td>@counterSrNo6</td>
+                                                            <td><input class="form-control text-center p-0" type="text" value="@item.tableName" readonly /></td>
+                                                            <td>
+                                                                <select class="form-control" disabled>
+
+                                                                    @foreach (var item2 in Model.listOfTableLocation)
+                                                                    {
+                                                                        if (item.tableLocationId == item2.tableLocationId)
+                                                                        {
+                                                                            <option value="@item2.tableLocationId" selected>@item2.tableLocation</option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@item2.tableLocationId">@item2.tableLocation</option>
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div>
+                                                                    <button type="button" class="d-inline btn btn-warning" onclick="UpdateTable(this,@item.tableId)"><i class="fa fa-pencil-square-o" aria-hidden='true'></i>&nbsp; Edit</button>
+                                                                    <button type="button" class="d-inline btn btn-danger" onclick="DeleteTable(this,@item.tableId)"><i class="fa fa-trash" aria-hidden='true'></i>&nbsp; Bin</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        { counterSrNo6 += 1; }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="snackbar"></div>
+</div>
+@Scripts.Render("~/bundles/bs-jq-bundle")
+<script type="text/javascript" src="~/Assets/JS/MasterEntities.js"></script>
+

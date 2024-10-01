@@ -1,0 +1,106 @@
+﻿
+  @font-face{ 
+ font-family: FontAwesome; 
+ src: url('/Assets/Vendors/font-awesome-4.7.0/fonts/fontawesome-webfont.woff') format('woff'),  
+      url('/Assets/Vendors/font-awesome-4.7.0/fonts/fontawesome-webfont.woff2') format('woff2'); 
+ }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+}
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+/* remove up down arrows of input */
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* sidebar-img-logo */
+.sidebar-img-logo{
+    display: block;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+
+.order-history-text{
+    font-size: 0.80em;
+}
+
+/* ob hover dropdown */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+/* form validattion error */
+
+.changeColorOnFail {
+        border: 1px solid red;
+}
+
+/*  
+select{
+    text-align-last:center;
+}
+*/
+#sidebarCollapse{
+    width:auto;
+}
+
+/* form related css */
+
+.details-info {
+  width: 100%;
+  padding: 10px 30px 10px 30px;
+  background-color: #f5f6fa;
+  border: 1px solid #dfe0e5;
+
+}
+ .details-info h3 {
+  color: #242526;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}

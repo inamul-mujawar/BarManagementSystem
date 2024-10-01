@@ -1,0 +1,78 @@
+﻿@model BarManagementSystem.Models.BackUpDatabase
+
+@{
+    ViewBag.Title = "SyncDataBase";
+}
+
+@Styles.Render("~/bundles/css-bundle")
+
+<div class="wrapper">
+    <!-- Sidebar  -->
+    @{
+        Html.RenderPartial("SideBar");
+    }
+
+    <!-- Page Content  -->
+    <div>
+
+        @{
+            Html.RenderPartial("NavBar");
+        }
+
+        <div class="container-fluid">
+            <div class="details-info">
+
+                <div id="add-menu-items">
+                    <form method="POST" action="/Master/SyncDataBase" id="syncDataBaseForm" onsubmit="return validateForm()">
+                        <div class="d-flex border-bottom">
+                            <h3>Back Up DataBase to local Folder</h3>
+                            <h6 class="ml-auto font-weight-light"><span class="text-danger">*</span> Mandatory Fields</h6>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 col-lg-3 col-xl-3"></div>
+                            <div class="col-12 col-lg-6 col-xl-6">
+                                <div class="alert alert-warning" role="alert">
+                                    Set up Back Up Folder by doxaSoftwares to avoid permission issues.
+                                </div>
+                                <div class="form-group">
+                                    <label for="itemName">Database Name<span style="color:red">*</span></label>
+                                    <div class="d-flex">
+                                        <input type="text" class="form-control" name="dbName" value="@ViewBag.dbName" readonly required>
+                                    </div>
+                                </div>  
+                                <div class="form-group">
+                                    <label for="itemName">Backup to Folder<span style="color:red">*</span></label>
+                                    <div class="d-flex">
+                                        <input type="text" class="form-control" name="filePath" placeholder="e.g : D:/Folder Name" required>
+                                    </div>
+                                </div>                        
+                            </div>
+                            <div class="col-12 col-lg-3 col-xl-3"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary btn-block w-25">Sync DB</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div>
+    <div id="snackbar"></div>
+</div>
+@Scripts.Render("~/bundles/bs-jq-bundle")
+<script>
+    $(document).ready(function () {
+        $('#sidebar ul li a:contains("Back up DB")').parent().addClass('sideBarActiveLink');
+    });
+    var success = @((TempData["BackUpDb"] != null).ToString().ToLower());
+
+    if (success == true){
+        ShowSnackBarMessages("Database restored successfully !!", "lightgrey", "green")
+    }
+</script>
+

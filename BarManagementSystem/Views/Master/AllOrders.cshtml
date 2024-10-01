@@ -1,0 +1,117 @@
+﻿@model IEnumerable<BarManagementSystem.Models.PaidOrder>
+
+@{
+    ViewBag.Title = "AllOrders";
+}
+@Styles.Render("~/bundles/css-bundle")
+<link href="~/Assets/Vendors/dataTables.bootstrap4.min/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+<div class="wrapper">
+    <!-- Sidebar  -->
+    @{
+        Html.RenderPartial("SideBar");
+    }
+
+    <!-- Page Content  -->
+    <div>
+        @{
+            Html.RenderPartial("NavBar");
+        }
+        <div class="container-fluid">
+            <div id="DeleteProduct">
+                <div class="card mb-4">
+                    <div class="card-header bg-secondary text-white">
+                        <div class="row mx-0">
+                            <div class="col-lg-4 col-xl-4">
+                                <i class="fa fa-table mr-1" aria-hidden="true"></i>
+                                All Order Details
+                            </div>
+                            <div class="col-lg-8 col-xl-8">
+                                <p class="m-0 d-flex justify-content-end">
+                                    <script>document.write(new Date().toDateString());</script>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" width="100%" cellspacing="0">
+                                <thead class="thead-dark">
+                                    <tr class="thead-dark">
+                                        <th colspan="3">
+                                        </th>
+                                        <th colspan="2">
+                                            <div class="input-group input-daterange float-right">
+                                                <input type="date" id="transactionHistoryFrom" class="form-control">
+                                                <div class="input-group-addon">&nbsp; to &nbsp;</div>
+                                                <input type="date" id="transactionHistoryTo" class="form-control">
+                                            </div>
+                                        </th>
+                                        <th colspan="1"><button class="btn btn-primary" type="button" onclick="FilteredOrdersData()">Apply</button></th>
+                                        <th colspan="2">
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center">Sr.No</th>
+                                        <th class="text-center">Table</th>
+                                        <th class="text-center">Occupied for</th>
+                                        <th class="text-center">Total Amount</th>
+                                        <th class="text-center">Paid by</th>
+                                        <th class="text-center">Date/Time of Payment</th>
+                                        <th class="text-center"></th>
+                                        <th class="text-center"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="data_FilteredOrders">
+                                    @{ var counterSrNo = 1;}
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-center">@counterSrNo</td>
+                                            <td class="text-center">@item.tableName</td>
+                                            <td class="text-center">@item.timeUltilizedOnTable</td>
+                                            <td class="text-center">@item.tableAmount</td>
+                                            <td class="text-center">@item.paymentMode</td>
+                                            <td class="text-center">@item.dateOfPayment</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-info btn-sm" type="button" onclick="AllOrderDetails('@item.invoiceNumber',@counterSrNo)"><i class="fa fa-info" aria-hidden="true"></i>&nbsp; Details</button>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-success btn-sm" type="button" onclick="PrintDuplicateOrderDetailsReciepts('@item.invoiceNumber')"><i class="fa fa-print" aria-hidden="true"></i>&nbsp; Print</button>
+                                            </td>
+                                        </tr>
+                                        <tr id="collapseme-@counterSrNo" class="collapse out">
+                                            <td colspan="8">
+                                                <div>
+                                                    <table class="table table-sm table-dark">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">Sr. No</th>
+                                                                <th class="text-center">Menu Item</th>
+                                                                <th class="text-center">Qty</th>
+                                                                <th class="text-center">Price</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="allOrderDetails-@counterSrNo"></tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        { counterSrNo += 1; }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/bs-jq-bundle")
+@Scripts.Render("~/bundles/datatable-bundle")
+<script type="text/javascript" src="~/Assets/JS/AllOrders.js"></script>
+

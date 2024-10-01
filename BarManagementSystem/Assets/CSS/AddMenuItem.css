@@ -1,0 +1,11 @@
+﻿
+/* checkbox in master entities*/
+input[type="checkbox"][readonly]{
+    pointer-events:none;
+}
+
+@media screen and (max-width: 430px) and (min-width: 320px) {
+    button{
+        width:auto;
+    }
+}

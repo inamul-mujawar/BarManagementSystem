@@ -1,0 +1,183 @@
+﻿@model BarManagementSystem.Models.TableOrderModel
+@{
+    ViewBag.Title = "TableOrders";
+}
+@Styles.Render("~/bundles/css-bundle")
+<link rel="stylesheet" href="~/Assets/CSS/AutoCompleteTextBox.css" />
+<link rel="stylesheet" href="~/Assets/CSS/TableOrders.css" />
+<div class="wrapper">
+    <!-- Sidebar  -->
+    @{
+        Html.RenderPartial("SideBar");
+    }
+    <!-- Page Content  -->
+    <div>
+        @{
+            Html.RenderPartial("NavBar");
+        }
+        <div class="container-fluid">
+            <div class="menu-item-container">
+                <div class="row mx-0">
+                    <div class="col-2 col-lg-2 col-xl-2 pl-0">
+                        <div class="input-group pb-2">
+                            <div class="w-100">
+                                <div class="d-flex justify-content-center text-uppercase">
+                                    <i class="fa fa-info mt-1" aria-hidden="true"></i>&nbsp; <p class="m-0 p-0 pl-1 text-info border-bottom">@Model.tableOrderInfo.tableName (@Model.tableOrderInfo.tableLocation)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-relative d-flex">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></div>
+                            </div>
+                            <div class="autocomplete-search-input">
+                                <input type="text" class="form-control" id="searchParticularMenuItem" placeholder="Search by id or name..." onkeydown="searchParticularMenuItem(this)">
+                            </div>
+                            
+                        </div>
+                        <div class="bg-light border-right mt-4" id="sidebar-wrapper">
+                            <div class="list-group list-group-flush text-center menu-category-list-overflow" id="menu-categories-list">
+                                @foreach (var item in Model.listOfMenuCategories)
+                                {
+                                    <a href="#" class="list-group-item list-group-item-action bg-light" onclick="DisplayMenuItems(@item.menuCategoryId)">@item.menuCategory</a>
+                                }
+                            </div>
+                        </div>
+                        
+                        @if (Model.tableOrderInfo.isReserved)
+                        {
+                            <div class="card mt-3" id="reserve-table-info">    
+                                <input type="hidden" id="reserveTableId" value="@Model.reserveTableInfo.reserveTableId" />                            
+                                <div class="card-header p-1 bg-warning">
+                                    Reserve table info
+                                </div>
+                                <div class="card-body p-1">
+                                    <div class="row mx-0 my-2">                                      
+                                        <div class="col-lg-12"><h6 class="text-muted">@Model.reserveTableInfo.name (@Model.reserveTableInfo.phone)</h6></div>                                 
+                                    </div>
+                                    <div class="row mx-0 my-2">
+                                        <div class="col-lg-12"><h6 class="text-muted">For @Model.reserveTableInfo.partySize People <i class="fa fa-at" aria-hidden="true"></i> @Model.reserveTableInfo.timeOfReserve</h6></div>
+                                    </div>
+                                    <div class="row mx-0 my-2 justify-content-center">
+                                        <div class="form-group">
+                                            <button class="btn btn-danger form-control btn-cancel-reservation" type="button" onclick="CancelTableReservation(@Model.reserveTableInfo.tableId,@Model.reserveTableInfo.reserveTableId)">Cancel reservation</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="col-6 col-lg-6 col-xl-6">
+                        <div class="row mx-0 pt-2" id="CategorySpecificMenuItemsDIV">
+                                                                             
+                        </div>
+                    </div>
+                    <div class="col-4 col-lg-4 col-xl-4">
+                        <div class="table-order-cart">
+                            <div class="cart-items">
+                                <table class="table table-striped">
+                                    <thead class="bg-info">
+                                        <tr>
+                                            <th class="text-center">Menu</th>
+                                            <th class="text-center">Quantity</th>
+                                            <th class="text-center">Price</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableCart">
+                                        @foreach (var item in Model.listOfMenuItemsOrdered)
+                                        {
+                                            <tr data-id="@item.menuItemId">
+                                                <td width="34%">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="d-flex">
+                                                                 @if (item.menuItemQty != "")
+                                                                 {
+                                                                    <h6>@item.menuItemName</h6><span class="font-weight-light ml-1 menu-item-qty">(@item.menuItemQty)</span>
+                                                                 }
+                                                                 else
+                                                                 {
+                                                                    <h6>@item.menuItemName</h6>
+                                                                 }
+                                                                 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="pl-0" width="35%">
+                                                    <div class="row justify-content-center">
+                                                        <div>
+                                                            <button class="btn btn-secondary" onclick="IncreaseFullScreenCartQty(this,@item.menuItemId)">+</button>
+                                                        </div>
+                                                        <div class="px-1" style="width: 30%;">
+                                                            <input type="text" class="form-control text-center menuItemQtyInput" value="@item.orderItemQuantity" min="1" readonly>
+                                                        </div>
+                                                        <div>
+                                                            <button class="btn btn-secondary" onclick="DecreaseFullScreenCartQty(this,@item.menuItemId)">-</button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="pl-0" width="20%">
+                                                    <input type="number" min="0" class="form-control text-center ml-auto" value="@item.orderItemPrice" readonly>
+                                                </td>
+                                                <td width="10%">
+                                                    <button onclick="DeleteFullCartProduct('@item.menuItemQty',this)" type="button" class="btn-danger" style="cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="cart-total">
+                                <div class="row mx-0">
+                                    <div class="col-6 col-lg-6 col-xl-6"></div>
+                                    <div class="col-6 col-lg-6 col-xl-6">
+                                        <span>
+                                            Total - &nbsp;<i class="fa fa-inr mt-1" aria-hidden="true"></i>&nbsp; <p id="totalForFullScreenCart" style="display: inline-flex;">@Model.tableOrderInfo.tableAmount</p>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row mx-0 pl-3">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="paymentModeRadio1" name="paymentModeRadio" class="custom-control-input" value="1">
+                                        <label class="custom-control-label" for="paymentModeRadio1">Cash</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="paymentModeRadio2" name="paymentModeRadio" class="custom-control-input" value="2">
+                                        <label class="custom-control-label" for="paymentModeRadio2">Card</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="paymentModeRadio3" name="paymentModeRadio" class="custom-control-input" value="3">
+                                        <label class="custom-control-label" for="paymentModeRadio3">UPI</label>
+                                    </div>
+                                </div>
+                                <div class="row mx-0 pt-3">
+                                    <div class="col-6 col-lg-6 col-xl-6 px-sm-0">
+                                        <button type="button" class="btn btn-info w-100 print-table-receipt" onclick="PrintTableReceipt(@Model.tableOrderInfo.tableId)">
+                                            <i class="fa fa-print" aria-hidden="true"></i>&nbsp; Print <span class="badge badge-light">@Model.tableOrderInfo.countOnReceiptPrinted</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-6 col-lg-6 col-xl-6">
+                                        <button type="button" class="btn btn-success w-100 pay-table-bill" onclick="PayTableBill(@Model.tableOrderInfo.tableId,@Model.tableOrderInfo.tableAmount)"><i class="fa fa-credit-card-alt" aria-hidden="true"></i>&nbsp; Pay Bill</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <input type="hidden" id="tableID" value="@Model.tableOrderInfo.tableId"/>
+    <input type="hidden" id="IsTableReserved" value="@Model.tableOrderInfo.isReserved.ToString().ToLower()" />
+    <input type="hidden" id="IsReservedCustomerShowedUp" value="@Model.tableOrderInfo.isReservedCustomerShowedUp.ToString().ToLower()" />
+    <div id="snackbar"></div>
+</div>
+@Scripts.Render("~/bundles/bs-jq-bundle")
+<script type="text/javascript" src="~/Assets/JS/AutoCompleteTextBox.js"></script>
+<script type="text/javascript" src="~/Assets/JS/TableOrders.js"></script>
+

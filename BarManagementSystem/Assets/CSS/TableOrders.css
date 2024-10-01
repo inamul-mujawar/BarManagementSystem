@@ -1,0 +1,76 @@
+﻿/*.autocomplete-search-input{
+    width:82%;
+}*/
+
+.table-order-cart .cart-items{
+   overflow-y: auto; 
+   height: auto;
+   max-height: 490px;
+}
+.table-order-cart .cart-total{
+   position:fixed;
+   bottom:20px;
+   width:30%
+}
+.card-title {
+    margin-bottom: .75rem;
+    margin-top: .25rem;
+    margin-left: .50rem;
+    font-size:0.9rem;
+}
+.menu-item-qty{
+    font-size:x-small;
+}
+
+/* medium devices i.e landscape tablets (768 and up)*/
+@media only screen and (min-width : 768px){
+
+}
+/* large devices i.e laptops/desktops (992 and up)*/
+@media only screen and (min-width : 992px){
+     #CategorySpecificMenuItemsDIV{
+        overflow-y: auto; 
+        height: auto;
+        max-height: 525px;
+    }
+    .menu-category-list-ifReserve{
+        overflow-y: auto;
+        height: auto;
+        max-height: 360px;
+    }
+    .menu-category-list-overflow{
+        overflow-y: auto;
+        height: auto;
+        max-height: 400px;
+    }
+}
+/* medium devices i.e large laptops/desktops (1200 and up)*/
+@media only screen and (min-width : 1200px){
+    #CategorySpecificMenuItemsDIV{
+        overflow-y: auto; 
+        height: auto;
+        max-height: 620px;
+    }
+    .menu-category-list-ifReserve{
+        overflow-y: auto;
+        height: auto;
+        max-height: 325px;
+    }
+    .menu-category-list-overflow{
+        overflow-y: auto;
+        height: auto;
+        max-height: 515px;
+    }
+    .table-order-cart .cart-items{
+        overflow-y: auto; 
+        height: auto;
+        max-height: 490px;
+    }
+}
+
+/* minimum width */
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+   .menu-item-butttons .btn-group-sm>.btn {
+    font-size: 0.575rem;
+}
+}

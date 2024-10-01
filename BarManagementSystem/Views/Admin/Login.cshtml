@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+@Styles.Render("~/bundles/css-bundle")
+<link rel="stylesheet" href="~/Assets/CSS/Login.css"/>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-0">
+    <div class="container-fluid">
+
+        <button type="button" id="sidebarCollapse" class="btn btn-outline-secondary" disabled>
+            <i class="fa fa-beer" aria-hidden="true"></i>
+            <span class="text-uppercase text-monospace">Toniq</span>
+        </button>       
+    </div>
+</nav>
+
+
+<div class="container-login100">
+    <div class="wrap-login100">
+        <div class="login100-form-title" style="background-image: url(/Assets/Images/pexels-photo.jpeg);">
+            <span class="login100-form-title-1">
+                Sign In
+            </span>
+        </div>
+
+        <form class="login100-form validate-form pb-5" method="POST" action="/Admin/Login">
+            <div class="wrap-input100 validate-input" data-validate="Username is required">
+                <span class="label-input100">Username</span>
+                <input class="input100" type="text" name="userName" placeholder="Enter username" autofocus>
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input" data-validate="Password is required">
+                <span class="label-input100">Password</span>
+                <input class="input100" type="password" name="password" placeholder="Enter password">
+                <span class="focus-input100"></span>
+            </div>
+            <div class="container-login100-form-btn mt-4">
+                <button class="login100-form-btn">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; Login
+                </button>
+            </div>
+        </form>
+        <div class="alert alert-light" id="discardedAlert" role="alert">
+            <div class="container d-flex justify-content-center">
+                <span class="text-muted">Desgined with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="#"> doxaSoftwares.com</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div id="snackbar"></div>
+</div>
+@Scripts.Render("~/bundles/bs-jq-bundle")
+<script type="text/javascript" src="~/Assets/JS/Login.js"></script>
+<script type="text/javascript">
+    var success = @((TempData["ErrorMessage"] != null).ToString().ToLower());
+
+    if (success == true){
+        ShowSnackBarMessages("Incorrect Username or Password !!", "lightgrey", "red")
+    }
+</script>
